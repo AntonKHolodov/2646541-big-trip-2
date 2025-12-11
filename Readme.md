@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Антон Холодов](https://up.htmlacademy.ru/ecmascript-individual/2/user/2646541).
-* Наставник: [Евгений Лепёшкин](https://htmlacademy.ru/profile/spearance)..
+* Наставник: [Евгений Лепёшкин](https://htmlacademy.ru/profile/spearance)
 
 ---
 
