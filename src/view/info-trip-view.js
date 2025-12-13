@@ -33,3 +33,4 @@ export default class InfoTrip {
     this.element = null;
   }
 }
+

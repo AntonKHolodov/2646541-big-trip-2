@@ -48,3 +48,4 @@ export default class SortView {
     this.element = null;
   }
 }
+

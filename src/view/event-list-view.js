@@ -23,3 +23,4 @@ export default class EditList {
     this.element = null;
   }
 }
+
