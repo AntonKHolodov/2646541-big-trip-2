@@ -71,12 +71,7 @@ export default class UiBlocker {
   /** Метод, убирающий CSS-класс с элемента */
   #removeClass = () => {
     this.#element.classList.remove('ui-blocker--on');
-      this.#disactivateBlocking();
-      return;
-    }
-
-    setTimeout(this.#disactivateBlocking, this.#upperLimit - duration);
-  }
+  };
 
   /** Метод, добавляющий CSS-класс и обработчик */
   #activateBlocking = () => {
