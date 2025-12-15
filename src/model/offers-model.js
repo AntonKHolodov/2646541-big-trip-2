@@ -1,6 +1,6 @@
 export default class OffersModel {
-  #service;
-  #offers;
+  #service = null;
+  #offers = null;
 
   constructor(service) {
     this.#service = service;

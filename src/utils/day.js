@@ -33,22 +33,20 @@ function getPointDuration(dateFrom, dateTo) {
 
   let pointDuration = 0;
 
-  switch (true) {
-    case timeDiff >= MSEC_IN_DAY:
-      pointDuration = dayjs.duration(timeDiff).format('DD[D] HH[H] mm[M]');
-      break;
-    case timeDiff >= MIN_IN_HOUR:
-      pointDuration = dayjs.duration(timeDiff).format('HH[H] mm[M]');
-      break;
-    case timeDiff >= MSEC_IN_HOUR:
-      pointDuration = dayjs.duration(timeDiff).format('mm[M]');
-      break;
+  if (timeDiff >= MSEC_IN_DAY) {
+    pointDuration = dayjs.duration(timeDiff).format('DD[D] HH[H] mm[M]');
+  } else if (timeDiff >= MSEC_IN_HOUR) {
+    pointDuration = dayjs.duration(timeDiff).format('HH[H] mm[M]');
+  } else if (timeDiff >= MIN_IN_HOUR) {
+    pointDuration = dayjs.duration(timeDiff).format('mm[M]');
+  } else {
+    pointDuration = dayjs.duration(timeDiff).format('m[M]');
   }
 
   return pointDuration;
 }
 
-function getScheduleDAte(date) {
+function getScheduleDate(date) {
   return dayjs(date).format('DD/MM/YY HH:mm');
 }
 
@@ -69,7 +67,7 @@ export {
   formatStringToShortDate,
   formatStringToTime,
   getPointDuration,
-  getScheduleDAte,
+  getScheduleDate,
   isPointFuture,
   isPointPresent,
   isPointPast,

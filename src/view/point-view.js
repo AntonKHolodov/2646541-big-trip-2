@@ -1,9 +1,10 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { formatStringToShortDate, formatStringToDayTime, formatStringToTime, getPointDuration } from '../utils/day.js';
 
-function createPointTemplate({ point, pointDestinations, pointOffers }) {
+const createPointTemplate = ({ point, pointDestinations, pointOffers }) => {
   const { basePrice, dateFrom, dateTo, type, isFavorite } = point;
   const { name } = pointDestinations;
+  const selectedOffers = pointOffers.filter((offer) => point.offers.includes(offer.id));
   return `
         <li class="trip-events__item">
             <div class="event">
@@ -29,7 +30,7 @@ function createPointTemplate({ point, pointDestinations, pointOffers }) {
             </p>
             <h4 class="visually-hidden">Offers:</h4>
             <ul class="event__selected-offers">
-              ${pointOffers.map((offer) => `
+              ${selectedOffers.map((offer) => `
                 <li class="event__offer">
                   <span class="event__offer-title">${offer.title}</span><br>
                   +€&nbsp;
@@ -48,7 +49,7 @@ function createPointTemplate({ point, pointDestinations, pointOffers }) {
             </div>
         </li>   
     `;
-}
+};
 
 export default class PointView extends AbstractView {
   #point = null;
