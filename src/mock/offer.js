@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomArrayElement } from '../utils.js';
+import { getRandomPositiveInteger, getRandomArrayElement } from '../utils/common.js';
 import { OFFERS, PRICE } from '../const.js';
 
 function generateMockOffer() {

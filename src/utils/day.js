@@ -2,20 +2,6 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-// Функция, возвращающая случайное целое число
-
-const getRandomPositiveInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-// Функция для получения случайного элемента массива
-
-const getRandomArrayElement = (elements) =>
-  elements[getRandomPositiveInteger(0, elements.length - 1)];
-
 // Работа с датой
 
 dayjs.extend(duration);
@@ -66,13 +52,25 @@ function getScheduleDAte(date) {
   return dayjs(date).format('DD/MM/YY HH:mm');
 }
 
+function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+function isPointPresent(point) {
+  return dayjs().isBefore(point.dateFrom) && dayjs().isAfter(point.dateTo);
+}
+
+function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
 export {
-  getRandomPositiveInteger,
-  getRandomArrayElement,
   formatStringToDayTime,
   formatStringToShortDate,
   formatStringToTime,
   getPointDuration,
   getScheduleDAte,
+  isPointFuture,
+  isPointPresent,
+  isPointPast,
 };
-

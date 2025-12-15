@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomArrayElement } from '../utils.js';
+import { getRandomPositiveInteger, getRandomArrayElement } from '../utils/common.js';
 
 import { generateMockDestination } from '../mock/destination.js';
 import { generateMockOffer } from '../mock/offer.js';

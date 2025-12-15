@@ -63,4 +63,11 @@ const POINT_BLANCK = {
   type: 'Taxi',
 };
 
-export { TYPES, DESCRIPTIONS, CITIES, OFFERS, PRICE, DURATION, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, POINT_BLANCK };
+const FILTER = {
+  everything: 'Everything',
+  future:'Future',
+  present:'Present',
+  past: 'Past',
+};
+
+export { TYPES, DESCRIPTIONS, CITIES, OFFERS, PRICE, DURATION, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, POINT_BLANCK, FILTER };

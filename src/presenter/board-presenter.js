@@ -3,23 +3,31 @@ import EditList from '../view/event-list-view.js';
 import FormEditView from '../view/form-edit-view.js';
 import PointView from '../view/point-view.js';
 import {render, replace} from '../framework/render.js';
+import EmptyListView from '../view/list-empty.js';
 
 export default class BoardPresenter {
   #sortComponent = new SortView();
   #editListComponent = new EditList();
   #container = null;
-  #destinations = null;
-  #offers = null;
-  #points = null;
+  #pointsModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
+  #points = [];
 
   constructor({ container, destinationsModel, offersModel, pointsModel }) {
     this.#container = container;
-    this.#destinations = destinationsModel;
-    this.#offers = offersModel;
-    this.#points = pointsModel.get();
+    this.#pointsModel = pointsModel;
+    this.#offersModel = offersModel;
+    this.#destinationsModel = destinationsModel;
+    this.#points = [...this.#pointsModel.get()];
   }
 
   init() {
+    if (this.#points.length === 0) {
+      render(new EmptyListView(), this.#container);
+      return;
+    }
+
     render(this.#sortComponent, this.#container);
     render(this.#editListComponent, this.#container);
     this.#points.forEach((point) => {
@@ -38,8 +46,8 @@ export default class BoardPresenter {
 
     const pointComponent = new PointView({
       point,
-      pointDestinations: this.#destinations.getById(point.destination),
-      pointOffers: this.#offers.getByType(point.type),
+      pointDestinations: this.#destinationsModel.getById(point.destination),
+      pointOffers: this.#offersModel.getByType(point.type),
       onEditClick: () => {
         replacePointToForm();
         document.addEventListener('keydown', escKeyDownHandler);
@@ -48,9 +56,9 @@ export default class BoardPresenter {
 
     const pointEditComponent = new FormEditView({
       point,
-      pointDestinations: this.#destinations.getById(point.destination),
-      pointOffers: this.#offers.getByType(point.type),
-      onSunmitClick: () => {
+      pointDestinations: this.#destinationsModel.getById(point.destination),
+      pointOffers: this.#offersModel.getByType(point.type),
+      onSubmitClick: () => {
         replaceFormToPoint();
         document.removeEventListener('keydown', escKeyDownHandler);
       },
