@@ -12,4 +12,8 @@ const getRandomPositiveInteger = (min, max) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-export { getRandomPositiveInteger, getRandomArrayElement };
+// Функция для обновления точек
+
+const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
+
+export { getRandomPositiveInteger, getRandomArrayElement, updateItem };

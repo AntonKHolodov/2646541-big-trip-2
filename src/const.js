@@ -53,7 +53,7 @@ const OFFER_COUNT = 3;
 
 const POINT_COUNT = 6;
 
-const POINT_BLANCK = {
+const POINT_BLANK = {
   basePrice: 0,
   dateFrom: null,
   dateTo: null,
@@ -70,4 +70,9 @@ const FILTER = {
   past: 'Past',
 };
 
-export { TYPES, DESCRIPTIONS, CITIES, OFFERS, PRICE, DURATION, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, POINT_BLANCK, FILTER };
+const MODE = {
+  default: 'default',
+  editing: 'editing',
+};
+
+export { TYPES, DESCRIPTIONS, CITIES, OFFERS, PRICE, DURATION, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, POINT_BLANK, FILTER, MODE };
