@@ -1,6 +1,16 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { formatStringToDayTime } from '../utils/day.js';
-import { POINT_BLANK, TYPES } from '../const.js';
+import { TYPES } from '../const.js';
+
+const POINT_BLANK = {
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
+  destination: null,
+  isFavorite: false,
+  offers: [],
+  type: 'Taxi',
+};
 
 function createFormEditTemplate({ point, pointDestinations, pointOffers }) {
   const { type, dateFrom, dateTo, basePrice } = point;

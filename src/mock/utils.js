@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { getRandomPositiveInteger } from '../utils/common.js';
-import { DURATION } from '../const';
+import { Duration } from '../const.js';
 
-let date = dayjs().subtract(getRandomPositiveInteger(0, DURATION.day), 'day').toDate();
+let date = dayjs().subtract(getRandomPositiveInteger(0, Duration.DAY), 'day').toDate();
 
 function getDate({ next }) {
-  const minsGap = getRandomPositiveInteger(0, DURATION.min);
-  const hoursGap = getRandomPositiveInteger(0, DURATION.hour);
-  const daysGap = getRandomPositiveInteger(0, DURATION.day);
+  const minsGap = getRandomPositiveInteger(0, Duration.MIN);
+  const hoursGap = getRandomPositiveInteger(0, Duration.HOUR);
+  const daysGap = getRandomPositiveInteger(0, Duration.DAY);
 
   if (next) {
     date = dayjs(date)
