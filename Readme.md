@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
-* Студент: [Антон Холодов](https://up.htmlacademy.ru/ecmascript-individual/2/user/2646541).
-* Наставник: [Евгений Лепёшкин](https://htmlacademy.ru/profile/spearance)..
+* Студент: [Алина Курицына](https://up.htmlacademy.ru/ecmascript/21/user/1723687).
+* Наставник: [Yulia Volkova](https://htmlacademy.ru/profile/id423707).
 
 ---
 
@@ -48,5 +48,5 @@ git clone SSH-адрес_вашего_форка
 
 Репозиторий создан для обучения на профессиональном курсе «[JavaScript. Архитектура клиентских приложений](https://htmlacademy.ru/intensive/ecmascript)» от [HTML Academy](https://htmlacademy.ru).
 
-[check-image]: https://github.com/htmlacademy-ecmascript/2646541-big-trip-2/workflows/Project%20check/badge.svg?branch=master
-[check-url]: https://github.com/htmlacademy-ecmascript/2646541-big-trip-2/actions
+[check-image]: https://github.com/htmlacademy-ecmascript/1723687-big-trip-21/workflows/Project%20check/badge.svg?branch=master
+[check-url]: https://github.com/htmlacademy-ecmascript/1723687-big-trip-21/actions
