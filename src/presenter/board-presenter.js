@@ -113,8 +113,10 @@ export default class BoardPresenter {
     render(this.#sortComponent, this.#container);
   };
 
-  #clearBoard = ({resetSortType = false} = {}) => {
-    this.#clearPoints();
+  #clearBoard = ({resetSortType = false, skipClearPoints = false} = {}) => {
+    if (!skipClearPoints) {
+      this.#clearPoints();
+    }
     remove(this.#sortComponent);
     this.#sortComponent = null;
 
@@ -198,7 +200,7 @@ export default class BoardPresenter {
     this.#isCreating = false;
     this.#newPointButtonPresenter.enableButton();
     if(this.points.length === 0 && isCanceled) {
-      this.#clearBoard();
+      this.#clearBoard({skipClearPoints: true});
       this.#renderBoard();
     }
   };

@@ -17,11 +17,11 @@ const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
 function formatStringToDayTime(date) {
-  return dayjs(date).format('YY-MM-DD HH:mm');
+  return date === null ? '' : dayjs(date).format('YY-MM-DD HH:mm');
 }
 
 function formatStringToShortDate(date) {
-  return dayjs(date).format('MMM DD');
+  return date === null ? '' : dayjs(date).format('MMM DD');
 }
 
 function formatStringToTime(date) {

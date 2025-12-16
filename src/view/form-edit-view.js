@@ -8,8 +8,8 @@ import he from 'he';
 
 const POINT_BLANK = {
   basePrice: '0',
-  dateFrom: '',
-  dateTo: '',
+  dateFrom: null,
+  dateTo: null,
   destination: '',
   isFavorite: false,
   offers: [],
@@ -41,13 +41,13 @@ const createTypeWrapperTemplate = (type, isDisabled) => `
   </div>
 `;
 
-const createDateTemplate = (dateFrom, dateTo, isDateCreating, isDisabled) => (`
+const createDateTemplate = (dateFrom, dateTo, isDisabled) => (`
     <div class="event__field-group  event__field-group--time">
       <label class="visually-hidden" for="event-start-time-1">From</label>
-      <input class="event__input  event__input--time" required id="event-start-time-1" type="text" name="event-start-time" ${isDisabled ? 'disabled' : ''} value="${isDateCreating ? formatStringToDayTime(dateFrom) : ''}">
+      <input class="event__input  event__input--time" required id="event-start-time-1" type="text" name="event-start-time" ${isDisabled ? 'disabled' : ''} value="${formatStringToDayTime(dateFrom)}">
       &mdash;
       <label class="visually-hidden" for="event-end-time-1">To</label>
-      <input class="event__input  event__input--time" required id="event-end-time-1" type="text" name="event-end-time"  ${isDisabled ? 'disabled' : ''} value="${isDateCreating ? formatStringToDayTime(dateTo) : ''}">
+      <input class="event__input  event__input--time" required id="event-end-time-1" type="text" name="event-end-time"  ${isDisabled ? 'disabled' : ''} value="${formatStringToDayTime(dateTo)}">
     </div>`);
 
 const createCitiesTemplate = (pointDestinations) => {
@@ -130,7 +130,7 @@ const createFormEditTemplate = ({ state, pointDestinations, pointOffers, modeAdd
   const {
     isDisabled,
     isSaving,
-    isDeleting
+    isDeleting,
   } = state;
   const isCreating = modeAddForm === EditType.CREATING;
   const offersByType = pointOffers.find((item) => item.type.toLowerCase() === point.type.toLowerCase()).offers;
@@ -153,7 +153,7 @@ const createFormEditTemplate = ({ state, pointDestinations, pointOffers, modeAdd
                   ${createCitiesTemplate(pointDestinations, destinationById)}
                   </datalist>
                 </div>
-                ${createDateTemplate(dateFrom, dateTo, isDisabled)}
+                ${createDateTemplate(dateFrom, dateTo, isDisabled, isCreating)}
                 ${createPriceTemplate(basePrice, isDisabled)}
 
                 <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
