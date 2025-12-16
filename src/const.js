@@ -81,6 +81,8 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
+  ERROR: 'ERROR',
 };
 
 const EditType = {
@@ -88,4 +90,16 @@ const EditType = {
   CREATING: 'CREATING',
 };
 
-export { TYPES, DESCRIPTIONS, CITIES, OFFERS, Price, Duration, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, FilterType, Mode, SortType, UserAction, UpdateType, EditType };
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+export { TYPES, DESCRIPTIONS, CITIES, OFFERS, Price, Duration, DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, FilterType, Mode, SortType, UserAction, UpdateType, EditType, Method, TimeLimit };

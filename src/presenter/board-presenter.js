@@ -3,10 +3,13 @@ import EditList from '../view/event-list-view.js';
 import PointPresenter from './point-presenter.js';
 import { render, remove } from '../framework/render.js';
 import EmptyListView from '../view/list-empty.js';
-import { SortType, FilterType, UpdateType, UserAction } from '../const.js';
+import { SortType, FilterType, UpdateType, UserAction, TimeLimit } from '../const.js';
 import { sortPointByTime, sortPointByPrice, sortPointByDay } from '../utils/sort.js';
 import { filter } from '../utils/filter.js';
 import NewPointPresenter from './new-point-presenter.js';
+import LoadingView from '../view/loading-view.js';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import FailedLoadingView from '../view/failed-loading-view.js';
 
 export default class BoardPresenter {
   #sortComponent = null;
@@ -22,6 +25,13 @@ export default class BoardPresenter {
   #newPointButtonPresenter = null;
   #isCreating = false;
   #noPointsComponent = null;
+  #loadingComponent = new LoadingView();
+  #failedLoadingComponent = new FailedLoadingView();
+  #isLoading = true;
+  #uiBlocker = new UiBlocker({
+    lowerLimit: TimeLimit.LOWER_LIMIT,
+    upperLimit: TimeLimit.UPPER_LIMIT
+  });
 
   constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, newPointButtonPresenter }) {
     this.#container = container;
@@ -54,10 +64,6 @@ export default class BoardPresenter {
         return filteredPoints.sort(sortPointByDay);
     }
     return filteredPoints;
-  }
-
-  init() {
-    this.#renderBoard();
   }
 
   newPointButtonClickHandler = () => {
@@ -96,6 +102,7 @@ export default class BoardPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
     this.#newPointPresenter.destroy();
+    remove(this.#noPointsComponent);
   }
 
   #renderSort = () => {
@@ -114,25 +121,43 @@ export default class BoardPresenter {
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
     }
-
+    remove(this.#loadingComponent);
     if (this.#noPointsComponent) {
       remove(this.#noPointsComponent);
     }
 
   };
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
+    this.#uiBlocker.block();
+
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointsModel.update(updateType, update);
+        this.#pointPresenters.get(update.id).setSaving();
+        try {
+          await this.#pointsModel.update(updateType, update);
+        } catch(err) {
+          this.#pointPresenters.get(update.id).setAborting();
+        }
         break;
       case UserAction.ADD_POINT:
-        this.#pointsModel.add(updateType, update);
+        this.#newPointPresenter.setSaving();
+        try {
+          await this.#pointsModel.add(updateType, update);
+        } catch(err) {
+          this.#newPointPresenter.setAborting();
+        }
         break;
       case UserAction.DELETE_POINT:
-        this.#pointsModel.delete(updateType, update);
+        this.#pointPresenters.get(update.id).setDeleting();
+        try {
+          await this.#pointsModel.delete(updateType, update);
+        } catch(err) {
+          this.#pointPresenters.get(update.id).setAborting();
+        }
         break;
     }
+    this.#uiBlocker.unblock();
   };
 
   #handleModelEvent = (updateType, data) => {
@@ -148,8 +173,26 @@ export default class BoardPresenter {
         this.#clearBoard({resetSortType: true});
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
+      case UpdateType.ERROR:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderFailedLoading();
+        break;
     }
   };
+
+  #renderLoading() {
+    render(this.#loadingComponent, this.#container);
+  }
+
+  #renderFailedLoading() {
+    render(this.#failedLoadingComponent, this.#container);
+  }
 
   #newPointDestroyHandler = ({isCanceled}) => {
     this.#isCreating = false;
@@ -183,12 +226,25 @@ export default class BoardPresenter {
   }
 
   #renderBoard = () => {
+    if (this.#isLoading) {
+      this.#newPointButtonPresenter.disableButton();
+      this.#renderLoading();
+      return;
+    }
+
     if(this.points.length === 0 && !this.#isCreating) {
+      this.#newPointButtonPresenter.enableButton();
       this.#renderNoPoints();
       return;
     }
+
+    this.#newPointButtonPresenter.enableButton();
     this.#renderSort();
     this.#renderPointContainer();
     this.#renderPoints();
   };
+
+  init() {
+    this.#renderBoard();
+  }
 }

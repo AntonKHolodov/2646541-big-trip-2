@@ -677,6 +677,9 @@ main {
   .event__input--price[type='number'] {
     -moz-appearance: textfield;
   }
+  .event__input::placeholder{
+    color: #000;
+  }
 .event__save-btn {
   margin-right: 18px; }
 

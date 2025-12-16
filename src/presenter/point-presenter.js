@@ -2,7 +2,6 @@ import FormEditView from '../view/form-edit-view.js';
 import PointView from '../view/point-view.js';
 import { Mode, UserAction, UpdateType, EditType } from '../const.js';
 import { remove, render, replace } from '../framework/render.js';
-import { isBigDifference } from '../utils/day.js';
 
 export default class PointPresenter {
   #container = null;
@@ -31,8 +30,8 @@ export default class PointPresenter {
 
     this.#pointComponent = new PointView({
       point: this.#point,
-      pointDestinations: this.#destinationsModel.getById(this.#point.destination),
-      pointOffers: this.#offersModel.getByType(this.#point.type),
+      pointDestinations: this.#destinationsModel.getById(point.destination),
+      pointOffers: this.#offersModel.getByType(point.type),
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick,
     });
@@ -110,14 +109,11 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = (updatedPoint) => {
-    const isMinor = isBigDifference(updatedPoint, this.#point);
-
     this.#handleDataChange(
       UserAction.UPDATE_POINT,
-      isMinor ? UpdateType.MINOR : UpdateType.PATCH,
+      UpdateType.MINOR,
       updatedPoint
     );
-    this.#replaceFormToPoint();
   };
 
   #handleFormClose = () => {
@@ -134,5 +130,41 @@ export default class PointPresenter {
         isFavorite: !this.#point.isFavorite
       }
     );
+  };
+
+  setSaving = () => {
+    if(this.#mode === Mode.EDITING) {
+      this.#pointEditComponent.updateElement({
+        isDisabled: true,
+        isSaving: true,
+      });
+    }
+  };
+
+  setDeleting = () => {
+    if(this.#mode === Mode.EDITING) {
+      this.#pointEditComponent.updateElement({
+        isDisabled: true,
+        isDeleting: true,
+      });
+    }
+  };
+
+  setAborting = () => {
+    if(this.#mode === Mode.DEFAULT) {
+      this.#pointComponent.shake();
+      return;
+    }
+    if(this.#mode === Mode.EDITING) {
+      const resetFormState = () => {
+        this.#pointEditComponent.updateElement({
+          isDisabled: false,
+          isSaving: false,
+          isDeleting: false,
+        });
+      };
+
+      this.#pointEditComponent.shake(resetFormState);
+    }
   };
 }
