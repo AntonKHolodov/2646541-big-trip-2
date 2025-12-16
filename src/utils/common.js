@@ -16,4 +16,8 @@ const getRandomArrayElement = (elements) =>
 
 const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
 
-export { getRandomPositiveInteger, getRandomArrayElement, updateItem };
+// Функция преобразует первую букву строки в верхний регистр
+
+const toCapitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
+export { getRandomPositiveInteger, getRandomArrayElement, updateItem, toCapitalize };

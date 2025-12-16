@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { formatStringToShortDate, formatStringToDayTime, formatStringToTime, getPointDuration } from '../utils/day.js';
+import he from 'he';
 
 const createPointTemplate = ({ point, pointDestinations, pointOffers }) => {
   const { basePrice, dateFrom, dateTo, type, isFavorite } = point;
@@ -14,7 +15,7 @@ const createPointTemplate = ({ point, pointDestinations, pointOffers }) => {
             <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/${type.toLowerCase()}.png" alt="Event type icon">
             </div>
-            <h3 class="event__title">${type} ${name}</h3>
+            <h3 class="event__title">${type} ${he.encode(name)}</h3>
             <div class="event__schedule">
                 <p class="event__time">
                 <time class="event__start-time" datetime=${formatStringToDayTime(dateFrom)}>${formatStringToTime(dateFrom)}</time>
@@ -25,7 +26,7 @@ const createPointTemplate = ({ point, pointDestinations, pointOffers }) => {
             </div>
             <p class="event__price">
                 &euro;&nbsp;<span class="event__price-value">
-                  ${basePrice}
+                ${he.encode(String(basePrice))}
                 </span>
             </p>
             <h4 class="visually-hidden">Offers:</h4>

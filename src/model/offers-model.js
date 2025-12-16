@@ -12,7 +12,7 @@ export default class OffersModel {
   }
 
   getByType(type) {
-    const foundOffers = this.#offers.find((offer) => offer.type === type).offers;
+    const foundOffers = this.#offers.find((offer) => offer.type.toLowerCase() === type.toLowerCase()).offers;
     return foundOffers || null;
   }
 }
