@@ -1,8 +1,8 @@
 import SortView from '../view/sort-view.js';
-import EditList from '../view/event-list-view.js';
+import EventsListView from '../view/events-list-view.js';
 import PointPresenter from './point-presenter.js';
 import { render, remove } from '../framework/render.js';
-import EmptyListView from '../view/list-empty.js';
+import ListEmptyView from '../view/list-empty-view.js';
 import { SortType, FilterType, UpdateType, UserAction, TimeLimit } from '../const.js';
 import { sortPointByTime, sortPointByPrice, sortPointByDay } from '../utils/sort.js';
 import { filter } from '../utils/filter.js';
@@ -14,7 +14,7 @@ import FailedLoadingView from '../view/failed-loading-view.js';
 export default class BoardPresenter {
   #sortComponent = null;
   #currentSortType = SortType.DAY;
-  #editListComponent = new EditList();
+  #eventsListComponent = new EventsListView();
   #container = null;
   #pointsModel = null;
   #destinationsModel = null;
@@ -42,7 +42,7 @@ export default class BoardPresenter {
     this.#newPointButtonPresenter = newPointButtonPresenter;
 
     this.#newPointPresenter = new NewPointPresenter({
-      container: this.#editListComponent.element,
+      container: this.#eventsListComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
@@ -81,7 +81,7 @@ export default class BoardPresenter {
 
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter({
-      container: this.#editListComponent.element,
+      container: this.#eventsListComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
@@ -216,11 +216,11 @@ export default class BoardPresenter {
   };
 
   #renderPointContainer = () => {
-    render(this.#editListComponent, this.#container);
+    render(this.#eventsListComponent, this.#container);
   };
 
   #renderNoPoints() {
-    this.#noPointsComponent = new EmptyListView({
+    this.#noPointsComponent = new ListEmptyView({
       filterType: this.#filterModel.get()
     });
 

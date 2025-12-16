@@ -46,10 +46,6 @@ function getPointDuration(dateFrom, dateTo) {
   return pointDuration;
 }
 
-function getScheduleDate(date) {
-  return dayjs(date).format('DD/MM/YY HH:mm');
-}
-
 function isPointFuture(point) {
   return dayjs().isBefore(point.dateFrom);
 }
@@ -62,25 +58,13 @@ function isPointPast(point) {
   return dayjs().isAfter(point.dateTo);
 }
 
-function getPointsPriceDifference(pointA, pointB) {
-  return pointB.basePrice - pointA.basePrice;
-}
-
-function isBigDifference(pointA, pointB) {
-  return pointA.dateFrom !== pointB.dateFrom
-  || pointA.basePrice !== pointB.basePrice
-  || getPointDuration(pointA.dateFrom, pointA.dateTo) !== getPointDuration(pointB.dateFrom, pointB.dateTo);
-}
-
 export {
   formatStringToDayTime,
   formatStringToShortDate,
   formatStringToTime,
   getPointDuration,
-  getScheduleDate,
+
   isPointFuture,
   isPointPresent,
   isPointPast,
-  getPointsPriceDifference,
-  isBigDifference
 };

@@ -1,24 +1,10 @@
-// Функция, возвращающая случайное целое число
-
-const getRandomPositiveInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-// Функция для получения случайного элемента массива
-
-const getRandomArrayElement = (elements) =>
-  elements[getRandomPositiveInteger(0, elements.length - 1)];
-
 // Функция для обновления точек
 
 const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);
 
 // Функция преобразует первую букву строки в верхний регистр
 
-const toCapitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+const toCapitalize = (string) => `${string[0].toUpperCase()}${string.slice(1)}`;
 
 const adaptToClient = (point) => {
   const adaptedPoint = {
@@ -53,4 +39,4 @@ const adaptToServer = (point) => {
   return adaptedPoint;
 };
 
-export { getRandomPositiveInteger, getRandomArrayElement, updateItem, toCapitalize, adaptToClient, adaptToServer };
+export { updateItem, toCapitalize, adaptToClient, adaptToServer };

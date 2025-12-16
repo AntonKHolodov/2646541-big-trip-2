@@ -6,17 +6,17 @@ import { UpdateType } from '../const.js';
 export default class FilterPresenter {
   #pointsModel = null;
   #container = null;
-  #filterModel = [];
+  #filtersModel = [];
   #currentFilter = null;
   #filterComponent = null;
 
   constructor({ pointsModel, container, filterModel }) {
     this.#container = container;
     this.#pointsModel = pointsModel;
-    this.#filterModel = filterModel;
+    this.#filtersModel = filterModel;
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
-    this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#filtersModel.addObserver(this.#handleModelEvent);
   }
 
   get filters() {
@@ -30,7 +30,7 @@ export default class FilterPresenter {
   }
 
   init() {
-    this.#currentFilter = this.#filterModel.get();
+    this.#currentFilter = this.#filtersModel.get();
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
@@ -49,7 +49,7 @@ export default class FilterPresenter {
   }
 
   #handleFilterTypeChange = (filterType) => {
-    this.#filterModel.set(UpdateType.MAJOR, filterType);
+    this.#filtersModel.set(UpdateType.MAJOR, filterType);
   };
 
   #handleModelEvent = () => {

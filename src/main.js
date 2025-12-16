@@ -1,5 +1,5 @@
 import {render, RenderPosition} from './framework/render.js';
-import InfoTrip from './view/info-trip-view.js';
+import TripInfoView from './view/trip-info-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import DestinationsModel from './model/destinations-model.js';
 import OffersModel from './model/offers-model.js';
@@ -14,7 +14,7 @@ const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
 
 const filterElement = document.querySelector('.trip-controls__filters');
 const pageMain = document.querySelector('.page-main');
-const infoTripElement = document.querySelector('.trip-main');
+const tripInfoElement = document.querySelector('.trip-main');
 const eventsListElement = pageMain.querySelector('.trip-events');
 const filterModel = new FilterModel;
 
@@ -29,7 +29,7 @@ const pointsModel = new PointsModel({
 });
 
 const newPointButtonPresenter = new NewPointButtonPresenter({
-  container: infoTripElement,
+  container: tripInfoElement,
 });
 
 const boardPresenter = new BoardPresenter({
@@ -47,7 +47,7 @@ const filterPresenter = new FilterPresenter({
   filterModel
 });
 
-render(new InfoTrip(), infoTripElement, RenderPosition.AFTERBEGIN);
+render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 
 newPointButtonPresenter.init({ onButtonClick: boardPresenter.newPointButtonClickHandler });
 

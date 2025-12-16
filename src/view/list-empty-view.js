@@ -1,11 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-
-const NoPointsTextType = {
-  EVERYTHING: 'Click New Event to create your first point',
-  FUTURE: 'There are no future events now',
-  PRESENT: 'There are no present events now',
-  PAST: 'There are no past events now',
-};
+import { NoPointsTextType } from '../const.js';
 
 function createEmptyListTemplate({filterText}) {
   return `
@@ -15,7 +9,7 @@ function createEmptyListTemplate({filterText}) {
     `;
 }
 
-export default class EmptyListView extends AbstractView {
+export default class ListEmptyView extends AbstractView {
   #filterType = null;
 
   constructor({filterType}) {
