@@ -6,11 +6,6 @@ export default class OffersModel {
     this.#service = service;
   }
 
-  async init() {
-    this.#offers = await this.#service.offers;
-    return this.#offers;
-  }
-
   get() {
     return this.#offers;
   }
@@ -19,4 +14,10 @@ export default class OffersModel {
     const foundOffers = this.#offers.find((offer) => offer.type.toLowerCase() === type.toLowerCase()).offers;
     return foundOffers || null;
   }
+
+  async init() {
+    this.#offers = await this.#service.offers;
+    return this.#offers;
+  }
+
 }
