@@ -3,7 +3,7 @@ import { formatStringToDayTime } from '../utils/day.js';
 import { TYPES, EditType, Mode } from '../const.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import { toCapitalize } from '../utils/common.js';
+import { capitalize } from '../utils/common.js';
 import he from 'he';
 
 const POINT_BLANK = {
@@ -35,7 +35,7 @@ const createTypeWrapperTemplate = (type, isDisabled) => `
     <div class="event__type-list">
       <fieldset class="event__type-group">
         <legend class="visually-hidden">Event type</legend>
-        ${createTypeTemplate(toCapitalize(type))}
+        ${createTypeTemplate(capitalize(type))}
       </fieldset>
     </div>
   </div>
@@ -264,7 +264,7 @@ export default class FormEditView extends AbstractStatefulView {
 
   #destinationChangeHandler = (evt) => {
     if (evt.target.value) {
-      const selectedDestination = this.#pointDestinations.find((pointDestination) => pointDestination.name === toCapitalize(evt.target.value));
+      const selectedDestination = this.#pointDestinations.find((pointDestination) => pointDestination.name === capitalize(evt.target.value));
       const selectedDestinationId = (selectedDestination) ? selectedDestination.id : this._state.point.destination;
       this.updateElement({
         point: {

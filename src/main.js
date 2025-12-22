@@ -1,5 +1,4 @@
-import {render, RenderPosition} from './framework/render.js';
-import TripInfoView from './view/trip-info-view.js';
+import TripInfoPresenter from './presenter/trip-info-presenter.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import DestinationsModel from './model/destinations-model.js';
 import OffersModel from './model/offers-model.js';
@@ -47,10 +46,17 @@ const filterPresenter = new FilterPresenter({
   filterModel
 });
 
-render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
+
+const tripInfoPresenter = new TripInfoPresenter({
+  container: tripInfoElement,
+  pointsModel,
+  destinationsModel,
+  offersModel,
+});
 
 newPointButtonPresenter.init({ onButtonClick: boardPresenter.newPointButtonClickHandler });
 
 boardPresenter.init();
 filterPresenter.init();
+tripInfoPresenter.init();
 pointsModel.init();

@@ -4,7 +4,7 @@ const updateItem = (items, update) => items.map((item) => item.id === update.id 
 
 // Функция преобразует первую букву строки в верхний регистр
 
-const toCapitalize = (string) => `${string[0].toUpperCase()}${string.slice(1)}`;
+const capitalize = (value) => `${value[0].toUpperCase()}${value.slice(1)}`;
 
 const adaptToClient = (point) => {
   const adaptedPoint = {
@@ -39,4 +39,4 @@ const adaptToServer = (point) => {
   return adaptedPoint;
 };
 
-export { updateItem, toCapitalize, adaptToClient, adaptToServer };
+export { updateItem, capitalize, adaptToClient, adaptToServer };
